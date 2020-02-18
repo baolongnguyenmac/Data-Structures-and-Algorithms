@@ -122,6 +122,23 @@ class CNode {
             return right + 1;
         }
 
+        int countNode() {
+            if (_pLeft == NULL && _pRight == NULL) {
+                if (_data == -1) {
+                    return 0;
+                }
+                return 1;
+            }
+            int left = 0, right = 0;
+            if (_pLeft != NULL) {
+                left = _pLeft->countNode();
+            }
+            if (_pRight != NULL) {
+                right = _pRight->countNode();
+            }
+            return left + right + 1;
+        }
+
         // void remove(int x) {
         //     if (x > _data && _pRight != NULL) {
         //         _pRight->remove(x);
@@ -157,6 +174,7 @@ int main(int argc, char const *argv[]) {
 
     cout << myTree->search(6)->getData() << endl;
     cout << myTree->height() << endl;
+    cout << myTree->countNode() << endl;
 
     return 0;
 }
