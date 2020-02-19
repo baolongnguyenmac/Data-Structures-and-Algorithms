@@ -33,8 +33,45 @@ class CTree {
             LNR(_pRoot);
         }
 
+        void remove(int x) {
+            remove(_pRoot, x);
+        }
+
     private:
         CNode* _pRoot;
+
+        void remove(CNode *&root, int x) {
+            if (root == NULL) {
+                return;
+            }
+            else if (x > root->_data) {
+                remove(root->_pRight, x);
+            }
+            else if (x < root->_data) {
+                remove(root->_pLeft, x);
+            }
+            else if (x == root->_data) {
+                CNode *del = root;
+
+                if (root->_pLeft == NULL) {
+                    root = root->_pRight;
+                    delete del;
+                }
+                else if (root->_pRight == NULL) {
+                    root = root->_pLeft;
+                    delete del;
+                }
+                else {
+                    CNode *leftMost = root->_pRight;
+                    while (leftMost->_pLeft != NULL) {
+                        leftMost = leftMost->_pLeft;
+                    }
+                    int temp = leftMost->_data;
+                    remove(root, temp);
+                    root->_data = temp;
+                }
+            }
+        }
 
         bool isEmptyTree(CNode* root) {
             return root == NULL;
@@ -71,6 +108,10 @@ int main(int argc, char const *argv[]) {
     tree->insert(6);
     tree->insert(-45);
 
+    tree->LNR();
+    cout << endl;
+
+    tree->remove(2);
     tree->LNR();
     cout << endl;
 
