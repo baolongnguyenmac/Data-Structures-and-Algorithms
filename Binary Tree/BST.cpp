@@ -103,19 +103,14 @@ class CNode {
         }
 
         int height() {
-            if (_pLeft == NULL && _pRight == NULL) {
-                if (_data == -1) {
-                    return 0;
-                }
-                return 1;
+            // đến đoạn này, compiler sẽ nói là this == NULL luôn sai
+            // nhưng thực tế là méo có chuyện đó nhé :)
+            if (this == NULL) {
+                return 0;
             }
-            int left = 0, right = 0;
-            if (_pLeft != NULL) {
-                left = _pLeft->height();
-            }
-            if (_pRight != NULL) {
-                right = _pRight->height();
-            }
+            int left = _pLeft->height();
+            int right = _pRight->height();
+
             if (left > right) {
                 return left + 1;
             }
@@ -123,37 +118,49 @@ class CNode {
         }
 
         int countNode() {
-            if (_pLeft == NULL && _pRight == NULL) {
-                if (_data == -1) {
-                    return 0;
-                }
-                return 1;
+            if (this == NULL) {
+                return 0;
             }
-            int left = 0, right = 0;
-            if (_pLeft != NULL) {
-                left = _pLeft->countNode();
-            }
-            if (_pRight != NULL) {
-                right = _pRight->countNode();
-            }
-            return left + right + 1;
+            return _pLeft->countNode() + _pRight->countNode() + 1;
         }
 
-        // void remove(int x) {
-        //     if (x > _data && _pRight != NULL) {
-        //         _pRight->remove(x);
-        //     }
-        //     else if (x < _data && _pLeft != NULL) {
-        //         _pLeft->remove(x);
-        //     }
-        //     else {
-        //         CNode *del = this;
-        //         if (del->_pLeft == NULL && del->_pRight == NULL) {
-        //             delete del;
-        //             del = NULL;
-        //         }
-        //     }
-        // }
+        void remove(int x) {
+            if (this == NULL) {
+                return;
+            }
+            else if (x > _data) {
+                _pRight->remove(x);
+            }
+            else if (x < _data) {
+                _pLeft->remove(x);
+            }
+            else if (x == _data) {
+                CNode *del = this;
+
+                // node lá hoặc node có 1 con 
+                if (del->_pLeft == NULL || del->_pRight == NULL) {
+                    if (del->_pLeft != NULL) {
+                        del = del->_pLeft;
+                        // delete this;
+                    }
+                    else {
+                        del = del->_pRight;
+                        // delete this;
+                    }
+                }
+
+                // node có 2 con 
+                else {
+                    CNode *leftMost = del->_pRight;
+                    while (leftMost->_pLeft != NULL) {
+                        leftMost = leftMost->_pLeft;
+                    }
+                    int temp = leftMost->_data;
+                    remove(temp);
+                    this->_data = temp;
+                }
+            }
+        }
 
     private:
         int _data;
