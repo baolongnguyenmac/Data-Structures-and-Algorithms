@@ -190,6 +190,22 @@ class CTree {
             return NULL;
         }
 
+        bool isBST(CNode *pRoot) {
+            if (pRoot == NULL) {
+                return true;
+            }
+            if (pRoot->_pLeft != NULL && pRoot->_pLeft->_data > pRoot->_data) {
+                return false;
+            }
+            if (pRoot->_pRight != NULL && pRoot->_pRight->_data < pRoot->_data) {
+                return false;
+            }
+            if (!isBST(pRoot->_pLeft) || !isBST(pRoot->_pRight)) {
+                return false;
+            }
+            return true;
+        }
+
         CNode *_pRoot;
 };
 
