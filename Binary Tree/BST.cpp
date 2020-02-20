@@ -203,8 +203,9 @@ int main(int argc, char const *argv[]) {
     tree->insert(5);
 
     tree->LNR();
+    cout << endl;
 
-    tree->remove(3);
+    tree->remove(1);
 
     tree->LNR();
 
