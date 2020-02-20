@@ -204,5 +204,9 @@ int main(int argc, char const *argv[]) {
 
     tree->LNR();
 
+    tree->remove(3);
+
+    tree->LNR();
+
     return 0;
 }
