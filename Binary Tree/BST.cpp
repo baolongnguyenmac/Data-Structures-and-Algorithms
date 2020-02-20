@@ -4,6 +4,8 @@
 #include "iostream"
 using namespace std;
 
+#include "vector"
+
 class CNode {
     public:
         CNode() {
@@ -82,6 +84,10 @@ class CTree {
 
         CNode* search(int x) {
             return search(_pRoot, x);
+        }
+
+        void BFS() {
+            BFS(_pRoot);
         }
 
     private:
@@ -206,24 +212,44 @@ class CTree {
             return true;
         }
 
+        void BFS(CNode *pRoot) {
+            vector<CNode*> queue;
+            CNode *temp = pRoot;
+            queue.push_back(temp);
+
+            while (!queue.empty()) {
+                temp = queue[0];
+                queue.erase(queue.begin());
+                if (temp->_pLeft != NULL) {
+                    queue.push_back(temp->_pLeft);
+                }
+                if (temp->_pRight != NULL) {
+                    queue.push_back(temp->_pRight);
+                }
+                cout << temp->_data << " ";
+            }
+        }
+
         CNode *_pRoot;
 };
 
 int main(int argc, char const *argv[]) {
     CTree *tree = new CTree;
 
+    tree->insert(1);
+    tree->insert(2);
     tree->insert(3);
     tree->insert(4);
-    tree->insert(2);
-    tree->insert(1);
     tree->insert(5);
 
-    tree->LNR();
-    cout << endl;
+    // tree->LNR();
+    // cout << endl;
 
-    tree->remove(1);
+    // tree->remove(1);
 
-    tree->LNR();
+    // tree->LNR();
+
+    tree->BFS();
 
     return 0;
 }
