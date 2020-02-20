@@ -262,15 +262,18 @@ class CTree {
         }
 
         bool isAVL(CNodeAVL *pRoot) {
-            // if (isBST(pRoot)) {
-            //     int delta = diff(pRoot);
-            //     if (delta <= 1 && delta >= -1) {
-            //         if (isAVL(pRoot->_pLeft) && isAVL(pRoot->_pRight)) {
-            //             return true;
-            //         }
-            //     }
-            // }
-            // return false;
+            if (isBST(pRoot)) {
+                if (pRoot == NULL) {
+                    return true;
+                }
+                int delta = diff(pRoot);
+                if (delta <= 1 && delta >= -1) {
+                    if (isAVL(pRoot->_pLeft) && isAVL(pRoot->_pRight)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         CNodeAVL *_pRoot;
@@ -291,13 +294,13 @@ int main(int argc, char const *argv[]) {
     tree->remove(1);
     tree->remove(3);
     tree->remove(4);
-    tree->remove(5);
+    // tree->remove(5);
 
     if (tree->isAVL()) {
         cout << "fuck\n";
     }
 
-    // tree->LNR();
+    tree->LNR();
 
     return 0;
 }
