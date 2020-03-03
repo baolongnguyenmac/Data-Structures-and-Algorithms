@@ -9,6 +9,9 @@ class CNode {
         CNode(int data) {
             _data = data;
         }
+        int getData() {
+            return _data;
+        }
 
         bool operator==(CNode *p) {
             if (_data == p->_data && _pNext == p->_pNext) {
@@ -95,6 +98,22 @@ class CList {
             }
         }
 
+        CNode* findNodeKth(int k) {
+            int count = 1;
+            CNode *p = _pHead;
+
+            for (; p != NULL; p = p->_pNext) {
+                if (count != k) {
+                    count++;
+                }
+                else {
+                    return p;
+                }
+            }
+
+            return NULL;
+        }
+
     private:
         CNode *_pHead = NULL;
         CNode *_pTail = NULL;
@@ -103,15 +122,17 @@ class CList {
 int main(int argc, char const *argv[]) {
     CList p;
     p.addTail(1);
-    p.addTail(1);
     p.addTail(2);
-    p.addTail(2);
-    p.addTail(2);
+    p.addTail(3);
+    p.addTail(4);
+    p.addTail(4);
 
     // p.deleteNode(1);
     // p.deleteNode(3);
 
-    p.deleteDuplicatedNode();
+    // p.deleteDuplicatedNode();
+
+    cout << p.findNodeKth(3)->getData() << endl;
 
     p.printList();
 
