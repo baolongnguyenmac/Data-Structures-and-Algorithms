@@ -39,7 +39,26 @@ class CList {
             cout << endl;
         }
 
-        
+        bool deleteNode(int del) {
+            if (_pHead->_data == del) {
+                CNode *d = _pHead;
+                _pHead = _pHead->_pNext;
+                delete d;
+            }
+            else {
+                for (CNode *p = _pHead; p != NULL; p = p->_pNext) {
+                    if (p->_pNext == NULL) {
+                        return false;
+                    }
+                    else if (p->_pNext->_data == del) {
+                        CNode *d = p->_pNext;
+                        p->_pNext = p->_pNext->_pNext;
+                        delete d;
+                    }
+                }
+            }
+            return true;
+        }
 
     private:
         CNode *_pHead = NULL;
@@ -55,7 +74,7 @@ int main(int argc, char const *argv[]) {
     p.addTail(5);
 
     // p.deleteNode(1);
-    // p.deleteNode(3);
+    p.deleteNode(3);
 
     p.printList();
 
