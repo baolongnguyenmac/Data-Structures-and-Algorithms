@@ -10,6 +10,13 @@ class CNode {
             _data = data;
         }
 
+        bool operator==(CNode *p) {
+            if (_data == p->_data && _pNext == p->_pNext) {
+                return true;
+            }
+            return false;
+        }
+
     private:
         int _data;
         CNode *_pNext = NULL;
@@ -60,6 +67,34 @@ class CList {
             return true;
         }
 
+        bool deleteNode(CNode *del) {
+            if (del == _pHead) {
+                _pHead = _pHead->_pNext;
+                delete del;
+                return true;
+            }
+            else {
+                for (CNode *q = _pHead; q != NULL; q = q->_pNext) {
+                    if (q->_pNext == del) {
+                        q->_pNext = q->_pNext->_pNext;
+                        delete del;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        void deleteDuplicatedNode() {
+            for (CNode *p = _pHead; p != NULL; p = p->_pNext) {
+                for (CNode *q = p->_pNext; q != NULL; q = q->_pNext) {
+                    if (p->_data == q->_data) {
+                        deleteNode(q);
+                    }
+                }
+            }
+        }
+
     private:
         CNode *_pHead = NULL;
         CNode *_pTail = NULL;
@@ -68,13 +103,15 @@ class CList {
 int main(int argc, char const *argv[]) {
     CList p;
     p.addTail(1);
+    p.addTail(1);
     p.addTail(2);
-    p.addTail(3);
-    p.addTail(4);
-    p.addTail(5);
+    p.addTail(2);
+    p.addTail(2);
 
     // p.deleteNode(1);
-    p.deleteNode(3);
+    // p.deleteNode(3);
+
+    p.deleteDuplicatedNode();
 
     p.printList();
 
