@@ -6,6 +6,51 @@ using namespace std;
 
 #include "vector"
 
+template <class T>
+class CNodeLinkedList {
+    public:
+        CNodeLinkedList(T data) {
+            _data = data;
+        }
+        int getData() {
+            return _data;
+        }
+
+    private:
+        T _data;
+        CNodeLinkedList *_pNext = NULL;
+        template <class U> friend class CList;
+};
+
+template <class T>
+class CList {
+    public:
+        bool isEmptyList() {
+            return _pHead == NULL;
+        }
+
+        void addTail(T data) {
+            if (isEmptyList()) {
+                _pHead = _pTail = new CNodeLinkedList<T>(data);
+            }
+            else {
+                _pTail->_pNext = new CNodeLinkedList<T>(data);
+                _pTail = _pTail->_pNext;
+            }
+        }
+
+        void printList() {
+            for (CNodeLinkedList<T> *p = _pHead; p != NULL; p = p->_pNext) {
+                cout << p->_data << " ";
+            }
+            cout << endl;
+        }
+
+    private:
+        CNodeLinkedList<T> *_pHead = NULL;
+        CNodeLinkedList<T> *_pTail = NULL;
+};
+
 class CNode {
     public:
         CNode() {
@@ -35,6 +80,11 @@ class CNode {
         }
         void setPRight(CNode *p) {
             _pRight = p;
+        }
+
+        friend ostream& operator<<(ostream &os, CNode *p) {
+            os << p->_data;
+            return os;
         }
 
     private:
@@ -96,6 +146,10 @@ class CTree {
             return tree;
         }
 
+        vector<CList<CNode*> > createVectorList() {
+            return createVectorList(_pRoot);
+        }
+
     private:
         // create a minimal tree from a sorted array (increasing order)
         void createBSTfromSortedArr(CNode *&pRoot, int a[], int left, int right) {
@@ -105,6 +159,32 @@ class CTree {
                 createBSTfromSortedArr(pRoot->_pLeft, a, left, mid - 1);
                 createBSTfromSortedArr(pRoot->_pRight, a, mid + 1, right);
             }
+        }
+
+        void createListByGivenLevel(CNode *pRoot, CList<CNode*> &list, int level) {
+            if (pRoot != NULL) {
+                if (level == 1) {
+                    list.addTail(pRoot);
+                }
+                else {
+                    createListByGivenLevel(pRoot->_pLeft, list, level - 1);
+                    createListByGivenLevel(pRoot->_pRight, list, level - 1);
+                }
+            }
+        }
+
+        //  create a linked list of all the nodes at each depth 
+        // (e.g., if you have a tree with depth D, you'll have D linked lists
+        vector<CList<CNode*> > createVectorList(CNode *pRoot) {
+            vector<CList<CNode*> > linkedListByLevelOrder;
+            int h = height();
+
+            for (int i = 1; i <= h; i++) {
+                CList<CNode*> temp;
+                createListByGivenLevel(pRoot, temp, i);
+                linkedListByLevelOrder.push_back(temp);
+            }
+            return linkedListByLevelOrder;
         }
 
         void remove(CNode *&pRoot, int x) {
@@ -252,11 +332,19 @@ class CTree {
 int main(int argc, char const *argv[]) {
     CTree *tree = new CTree;
 
-    tree->insert(1);
-    tree->insert(2);
-    tree->insert(3);
-    tree->insert(4);
     tree->insert(5);
+    tree->insert(3);
+    tree->insert(7);
+    tree->insert(2);
+    tree->insert(8);
+    tree->insert(6);
+    tree->insert(4);
+
+    // vector<CList<CNode*> > listOfList = tree->createVectorList();
+    // for (int i = 0; i < listOfList.size(); i++) {
+    //     listOfList[i].printList();
+    //     cout << endl;
+    // }
 
     // tree->LNR();
     // cout << endl;
@@ -273,97 +361,3 @@ int main(int argc, char const *argv[]) {
 
     return 0;
 }
-
-
-/*
-
-#include "stdio.h"
-#include "stdlib.h"
-
-#include "vector"
-using namespace std;
-
-struct NODE {
-    int data;
-    NODE *pLeft;
-    NODE *pRight;
-};
-
-NODE* getNode(int data) {
-    NODE *p = new NODE;
-    p->data = data;
-    p->pRight = p->pLeft = NULL;
-    return p;
-}
-
-void insertNode(int data, NODE *&pRoot) {
-    if (pRoot == NULL) {
-        pRoot = getNode(data);
-    }
-    else {
-        if (data <pRoot->data) {
-            insertNode(data, pRoot->pLeft);
-        }
-        else {
-            insertNode(data, pRoot->pRight);
-        }
-    }
-}
-
-void BFS(NODE *pRoot) {
-    vector<NODE*> queue;
-    queue.push_back(pRoot);
-
-    NODE *temp;
-    while (!queue.empty()) {
-        temp = queue[0];
-        queue.erase(queue.begin());
-        printf("%d ", temp->data);
-        if (temp->pRight != NULL) {
-            queue.push_back(temp->pRight);
-        }
-        if (temp->pLeft != NULL) {
-            queue.push_back(temp->pLeft);
-        }
-    }
-}
-
-void NLR(NODE *proot) {
-    if (proot != NULL) {
-        printf("%d ", proot->data);
-        NLR(proot->pLeft);
-        NLR(proot->pRight);
-    }
-}
-
-void createTree(NODE *&proot, int a[], int left, int right) {
-    if (left <= right) {
-        int mid = (right + left) / 2;
-        proot = getNode(a[mid]);
-        createTree(proot->pLeft, a, left, mid - 1);
-        createTree(proot->pRight, a, mid + 1, right);
-    }
-}
-
-int main(int argc, char const *argv[]) {
-    NODE *p = NULL;
-    int a[] = {1,2,3,4,5,6,7,8,9};
-    createTree(p, a, 0, 8);
-
-    // insertNode(5, p);
-    // insertNode(7, p);
-    // insertNode(3, p);
-    // insertNode(2, p);
-    // insertNode(4, p);
-    // insertNode(6, p);
-    // insertNode(8, p);
-
-    BFS(p);
-    // NLR(p);
-    printf("\n");
-
-    return 0;
-}
-
-
-*/
