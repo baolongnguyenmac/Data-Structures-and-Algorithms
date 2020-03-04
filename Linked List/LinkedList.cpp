@@ -24,6 +24,7 @@ class CNode {
     private:
         int _data;
         CNode *_pNext = NULL;
+        // tại sao lại là template<class U> mà không phải là template<class T>
         template <class U> friend class CList;
 };
 
