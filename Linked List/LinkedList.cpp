@@ -4,16 +4,17 @@
 #include "iostream"
 using namespace std;
 
+template <class T>
 class CNode {
     public:
-        CNode(int data) {
+        CNode(T data) {
             _data = data;
         }
         int getData() {
             return _data;
         }
 
-        bool operator==(CNode *p) {
+        bool operator==(CNode<T> *p) {
             if (_data == p->_data && _pNext == p->_pNext) {
                 return true;
             }
@@ -23,45 +24,47 @@ class CNode {
     private:
         int _data;
         CNode *_pNext = NULL;
-        friend class CList;
+        template <class U> friend class CList;
 };
 
+
+template <class T>
 class CList {
     public:
         bool isEmptyList() {
             return _pHead == NULL;
         }
 
-        void addTail(int data) {
+        void addTail(T data) {
             if (isEmptyList()) {
-                _pHead = _pTail = new CNode(data);
+                _pHead = _pTail = new CNode<T>(data);
             }
             else {
-                _pTail->_pNext = new CNode(data);
+                _pTail->_pNext = new CNode<T>(data);
                 _pTail = _pTail->_pNext;
             }
         }
 
         void printList() {
-            for (CNode *p = _pHead; p != NULL; p = p->_pNext) {
+            for (CNode<T> *p = _pHead; p != NULL; p = p->_pNext) {
                 cout << p->_data << " ";
             }
             cout << endl;
         }
 
-        bool deleteNode(int del) {
+        bool deleteNode(T del) {
             if (_pHead->_data == del) {
-                CNode *d = _pHead;
+                CNode<T> *d = _pHead;
                 _pHead = _pHead->_pNext;
                 delete d;
             }
             else {
-                for (CNode *p = _pHead; p != NULL; p = p->_pNext) {
+                for (CNode<T> *p = _pHead; p != NULL; p = p->_pNext) {
                     if (p->_pNext == NULL) {
                         return false;
                     }
                     else if (p->_pNext->_data == del) {
-                        CNode *d = p->_pNext;
+                        CNode<T> *d = p->_pNext;
                         p->_pNext = p->_pNext->_pNext;
                         delete d;
                     }
@@ -70,14 +73,14 @@ class CList {
             return true;
         }
 
-        bool deleteNode(CNode *del) {
+        bool deleteNode(CNode<T> *del) {
             if (del == _pHead) {
                 _pHead = _pHead->_pNext;
                 delete del;
                 return true;
             }
             else {
-                for (CNode *q = _pHead; q != NULL; q = q->_pNext) {
+                for (CNode<T> *q = _pHead; q != NULL; q = q->_pNext) {
                     if (q->_pNext == del) {
                         q->_pNext = q->_pNext->_pNext;
                         delete del;
@@ -89,8 +92,8 @@ class CList {
         }
 
         void deleteDuplicatedNode() {
-            for (CNode *p = _pHead; p != NULL; p = p->_pNext) {
-                for (CNode *q = p->_pNext; q != NULL; q = q->_pNext) {
+            for (CNode<T> *p = _pHead; p != NULL; p = p->_pNext) {
+                for (CNode<T> *q = p->_pNext; q != NULL; q = q->_pNext) {
                     if (p->_data == q->_data) {
                         deleteNode(q);
                     }
@@ -98,9 +101,9 @@ class CList {
             }
         }
 
-        CNode* findNodeKth(int k) {
+        CNode<T>* findNodeKth(int k) {
             int count = 1;
-            CNode *p = _pHead;
+            CNode<T> *p = _pHead;
 
             for (; p != NULL; p = p->_pNext) {
                 if (count != k) {
@@ -115,13 +118,13 @@ class CList {
         }
 
     private:
-        CNode *_pHead = NULL;
-        CNode *_pTail = NULL;
+        CNode<T> *_pHead = NULL;
+        CNode<T> *_pTail = NULL;
 };
 
 // template <typename T>
 int main(int argc, char const *argv[]) {
-    CList p;
+    CList<int> p;
     p.addTail(1);
     p.addTail(2);
     p.addTail(3);
