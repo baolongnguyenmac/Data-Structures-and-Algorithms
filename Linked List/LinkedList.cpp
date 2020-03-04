@@ -119,6 +119,7 @@ class CList {
         CNode *_pTail = NULL;
 };
 
+// template <typename T>
 int main(int argc, char const *argv[]) {
     CList p;
     p.addTail(1);
