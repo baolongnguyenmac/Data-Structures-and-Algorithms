@@ -80,6 +80,46 @@ class CGraph {
             DFS(start, _isVisited);
         }
 
+        // implement base on BFS
+        bool isConnectedBFS(int start) {
+            vector<int> queue;
+            generateIsVisitedVector();
+
+            queue.push_back(start);
+            _isVisited[start] = true;
+
+            int temp;
+            while (!queue.empty()) {
+                temp = queue[0];
+                queue.erase(queue.begin());
+                for (int i = 0; i < _v; i++) {
+                    if (_adjacency[temp][i] == 1 && !_isVisited[i]) {
+                        queue.push_back(i);
+                        _isVisited[i] = true;
+                    }
+                }
+            }
+
+            for (int i = 0; i < _isVisited.size(); i++) {
+                if (!_isVisited[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // implement base on DFS
+        bool isConnectedDFS(int start) {
+            generateIsVisitedVector();
+            isConnectedDFS(start, _isVisited);
+            for (int i = 0; i < _isVisited.size(); i++) {
+                if (!_isVisited[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     private:
         int _v;
         int _adjacency[MAX][MAX];
@@ -87,6 +127,16 @@ class CGraph {
 
         void DFS(int start, vector<bool> &isVisited) {
             cout << start << " ";
+            isVisited[start] = true;
+
+            for (int i = 0; i < _v; i++) {
+                if (_adjacency[start][i] == 1 && !isVisited[i]) {
+                    DFS(i, isVisited);
+                }
+            }
+        }
+
+        void isConnectedDFS(int start, vector<bool> &isVisited) {
             isVisited[start] = true;
 
             for (int i = 0; i < _v; i++) {
