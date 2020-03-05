@@ -150,7 +150,39 @@ class CTree {
             return createVectorList(_pRoot);
         }
 
+        bool isBalanced() {
+            if (checkHeight(_pRoot) == -1) {
+                return false;
+            }
+            return true;
+        }
+
     private:
+        // check if balanced ver dev (not coder)
+        int checkHeight(CNode *pRoot) {
+            if (pRoot == NULL) {
+                return 0;
+            }
+            int left = checkHeight(pRoot->_pLeft);
+            if (left == -1) {
+                return -1;
+            }
+            int right = checkHeight(pRoot->_pRight);
+            if (right == -1) {
+                return -1;
+            }
+
+            if (abs(left - right) > 1) {    // tìm thấy lỗi 
+                return -1;
+            }
+
+            if (left > right) {
+                return left + 1;
+            }
+            return right +1;
+            
+        }
+
         // create a minimal tree from a sorted array (increasing order)
         void createBSTfromSortedArr(CNode *&pRoot, int a[], int left, int right) {
             if (left <= right) {
@@ -339,6 +371,13 @@ int main(int argc, char const *argv[]) {
     tree->insert(8);
     tree->insert(6);
     tree->insert(4);
+
+    if (tree->isBalanced()) {
+        cout << "balanced\n";
+    }
+    else {
+        cout << "meos balance\n";
+    }
 
     // vector<CList<CNode*> > listOfList = tree->createVectorList();
     // for (int i = 0; i < listOfList.size(); i++) {
