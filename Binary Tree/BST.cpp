@@ -157,7 +157,63 @@ class CTree {
             return true;
         }
 
+        bool isValidBST() {
+            // // method1
+            // return isValidBST(_pRoot);
+
+            // method 2
+            return isValidBST(_pRoot, NULL);
+        }
+
     private:
+        // valid BST
+        // CÀI ĐẶT BẰNG ĐỆ QUY NHƯNG KHÔNG HIỆU QUẢ LẮM :>
+        bool isValidBST(CNode *pRoot) {
+            if (pRoot == NULL) {
+                return true;
+            }
+            if (pRoot->_pLeft != NULL && pRoot->_data <= pRoot->_pLeft->_data) {
+                return false;
+            }
+            if (pRoot->_pRight != NULL && pRoot->_data >= pRoot->_pRight->_data) {
+                return false;
+            }
+            return isValidBST(pRoot->_pLeft) && isValidBST(pRoot->_pRight);
+
+            /*  another idea: Duyệt NLR sau đó lưu vào 1 mảng -> kiểu tra tính tăng dần của mảng đó 
+                => quá ease nên méo cài :>
+            */
+        }
+
+        // valid BST
+        // CÀI ĐẶT BẰNG ĐỆ QUY NHƯNG HIỆU QUẢ HƠN CÁCH TRÊN
+        bool isValidBST(CNode *pRoot, int *lastData) {
+            /*
+                ý tưởng: duyệt cây theo kiểu LNR và kiểm tra tăng dần trực tiếp trên cây chứ k thông qua mảng
+                hình dung: 
+                    add lần lượt các node 2, 1, 3 vào cây
+                    thứ tự duyệt sẽ là 1, 2, 3
+                    khi đó, 1 sẽ là lastData so với 2 (trong TH đang xét node 2), 2 sẽ là lastData so với 3 (trong TH đang xét node 3)
+                    vì 1 lý do nào đó mà 1 > 2 (lastData > proot->data) thì sẽ return false
+            */
+
+            if (pRoot == NULL) {
+                return true;
+            }
+            if (!isValidBST(pRoot->_pLeft, lastData)) {
+                return false;
+            }
+            if (lastData != NULL && *lastData > pRoot->_data) {
+                return false;
+            }
+            *lastData = pRoot->_data;
+            if (!isValidBST(pRoot->_pRight, lastData)) {
+                return false;
+            }
+
+            return true;
+        }
+
         // check if balanced ver dev (not coder)
         int checkHeight(CNode *pRoot) {
             if (pRoot == NULL) {
@@ -364,20 +420,27 @@ class CTree {
 int main(int argc, char const *argv[]) {
     CTree *tree = new CTree;
 
-    tree->insert(5);
-    tree->insert(3);
-    tree->insert(7);
-    tree->insert(2);
-    tree->insert(8);
-    tree->insert(6);
-    tree->insert(4);
+    // tree->insert(5);
+    // tree->insert(3);
+    // tree->insert(7);
+    // tree->insert(2);
+    // tree->insert(8);
+    // tree->insert(6);
+    // tree->insert(4);
 
-    if (tree->isBalanced()) {
-        cout << "balanced\n";
+    if (tree->isValidBST()) {
+        cout << "dung cmnr\n";
     }
     else {
-        cout << "meos balance\n";
+        cout << "fuck\n";
     }
+
+    // if (tree->isBalanced()) {
+    //     cout << "balanced\n";
+    // }
+    // else {
+    //     cout << "meos balance\n";
+    // }
 
     // vector<CList<CNode*> > listOfList = tree->createVectorList();
     // for (int i = 0; i < listOfList.size(); i++) {
