@@ -167,7 +167,7 @@ class CTree {
 
     private:
         // valid BST
-        // CÀI ĐẶT BẰNG ĐỆ QUY NHƯNG KHÔNG HIỆU QUẢ LẮM :>
+        // CÀI ĐẶT BẰNG ĐỆ QUY Min/Max (sách ngta gọi nv :>)
         bool isValidBST(CNode *pRoot) {
             if (pRoot == NULL) {
                 return true;
@@ -186,7 +186,7 @@ class CTree {
         }
 
         // valid BST
-        // CÀI ĐẶT BẰNG ĐỆ QUY NHƯNG HIỆU QUẢ HƠN CÁCH TRÊN
+        // CÀI ĐẶT BẰNG ĐỆ QUY theo kiểu LNR
         bool isValidBST(CNode *pRoot, int *lastData) {
             /*
                 ý tưởng: duyệt cây theo kiểu LNR và kiểm tra tăng dần trực tiếp trên cây chứ k thông qua mảng
