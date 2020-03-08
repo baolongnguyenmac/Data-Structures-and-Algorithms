@@ -100,22 +100,30 @@ int height(NODE *p) {
 }
 
 NODE* findIntersect(int _p, int _q, NODE *pRoot) {
+    /*
+        * giải thích 1 chút xíu nha :)
+        * nếu là p và q là 2node có cùng độ cao thì khi dò dần dần lên parent của tụi nó, chúng ta sẽ gặp intersect 
+        * nếu p và q khác độ cao thì intersect(p, q) = intersect(p', q') với p' là parent của p, q' là parent của q và p', q' có cùng độ cao
+        * vietsub dòng bên trên: nếu nó k cùng độ cao thì làm cho nó cùng độ cao là ok :>
+    */
+
     NODE *p = findNode(_p, pRoot), *q = findNode(_q, pRoot);
     if (p == NULL || q == NULL) {
         return NULL;
     }
 
+    // check cùng độ cao 
     int delta = height(p) - height(q);
-    while (delta > 0) {
+    while (delta > 0) { // xử lý cho cùng độ cao
         p = p->pParent;
         delta--;
     }
-    while (delta < 0) {
+    while (delta < 0) { // xử lý cho cùng độ cao
         q = q->pParent;
         delta++;
     }
-    while (p->pParent != NULL) {
-        if (p == q) {
+    while (p->pParent != NULL) {    // khi đã cùng độ cao thì dò dần lên :>
+        if (p == q) {   // nhưng trước khi dò dần lên thì phải check xem nếu 2 đứa chúng nó (sau khi điều chỉnh độ cao) là 1
             return p;
         }
         p = p->pParent;
