@@ -9,6 +9,7 @@ Balance tree every adding node
 Check whether the tree is AVL tree or BST
 BFS to print LevelOrder mode
 DFS to travel tree
+Find the "next" node of a given node (node - left - right, LNR, LRN)
 
 ## Graph
 implement a graph using adj-matrix
