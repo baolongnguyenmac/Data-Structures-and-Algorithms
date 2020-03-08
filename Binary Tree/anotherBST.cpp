@@ -45,8 +45,27 @@ class CTree {
             return insert(_pRoot, data);
         }
 
+        // tìm node tiếp theo của node *p trong TH duyệt node theo kiểu NLR
+        // CNode* findNodeNLR(int x) {
+            /*
+                (TH1) -> 2 
+                        / \
+                (TH2)->1   3 <-(TH3)
+            */
+            // CNode *p = findNode(_pRoot, x);
+            // if (p == NULL) {
+            //     return NULL;
+            // }
+            // if (p->_pLeft != NULL) {
+            //     return p->_pLeft;
+            // }
+            // else if () {
+
+            // }
+        // }
+
         // tìm node tiếp theo của node *p trong TH duyệt node theo kiểu LNR
-        CNode* findNext(int x) {
+        CNode* findNextLNR(int x) {
             /*
                 (TH1) -> 2 
                         / \
@@ -143,9 +162,7 @@ int main(int argc, char const *argv[]) {
     tree->insert(3);
     tree->insert(6);
 
-    cout << tree->findNext(6)->getData() << endl;
-
-    // tree->BFS();
+    cout << tree->findNextLNR(6)->getData() << endl;
 
     return 0;
 }
