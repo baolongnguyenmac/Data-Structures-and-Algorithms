@@ -420,20 +420,22 @@ class CTree {
 int main(int argc, char const *argv[]) {
     CTree *tree = new CTree;
 
-    // tree->insert(5);
-    // tree->insert(3);
-    // tree->insert(7);
-    // tree->insert(2);
-    // tree->insert(8);
-    // tree->insert(6);
-    // tree->insert(4);
+    tree->insert(5);
+    tree->insert(3);
+    tree->insert(7);
+    tree->insert(2);
+    tree->insert(8);
+    tree->insert(6);
+    tree->insert(4);
 
-    if (tree->isValidBST()) {
-        cout << "dung cmnr\n";
-    }
-    else {
-        cout << "fuck\n";
-    }
+    tree->LRN();
+
+    // if (tree->isValidBST()) {
+    //     cout << "dung cmnr\n";
+    // }
+    // else {
+    //     cout << "fuck\n";
+    // }
 
     // if (tree->isBalanced()) {
     //     cout << "balanced\n";
