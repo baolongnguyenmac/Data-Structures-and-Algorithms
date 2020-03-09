@@ -46,23 +46,50 @@ class CTree {
         }
 
         // tìm node tiếp theo của node *p trong TH duyệt node theo kiểu NLR
-        CNode* findNodeNLR(int x) {
-            /*  * trình tự duyệt: 2->1->3
-                * (TH1) -> 2 
-                *         / \
-                * (TH2)->1   3 <-(TH3)
-            */
+        CNode* findNextNLR(int x) {
             CNode *p = findNode(_pRoot, x);
             if (p == NULL) {
                 return NULL;
             }
+            // nếu có con trái/phải thì vô đó luôn :))
             if (p->_pLeft != NULL) {
                 return p->_pLeft;
             }
+            if (p->_pRight != NULL) {
+                return p->_pRight;
+            }
+
+            // nên đọc đoạn code được cmt bên dưới để hiểu nhanh hơn 
+            // nếu p là 1 cây con phải của parent nó 
+            while (p->_pParent->_pRight == p) {
+                p = p->_pParent;
+            }
+            // nếu p là 1 cây con trái của parent nó 
+            p = p->_pParent;
             while (p->_pRight == NULL) {
                 p = p->_pParent;
             }
             return p->_pRight;
+
+            /*  * vietsub của đoạn code bên trên :>
+                * muốn hiểu nhanh hơn thì hãy vẽ TH ra để nhìn và đối chiếu code :>
+                if (p->_pParent->_pLeft == p) {
+                    while (p->_pRight == NULL) {
+                        p = p->_pParent;
+                    }
+                    return p->_pRight;
+                }
+                if (p->_pParent->_pRight == p) {
+                    while (p->_pParent->_pRight == p) {
+                        p = p->_pParent;
+                    }
+                    p = p->_pParent;
+                    while (p->_pRight == NULL) {
+                        p = p->_pParent;
+                    }
+                    return p->_pRight;
+                }
+            */
         }
 
         // tìm node tiếp theo của node *p trong TH duyệt node theo kiểu LNR
@@ -77,12 +104,24 @@ class CTree {
                 return NULL;
             }
             else if (p->_pRight != NULL) {  // TH1
-                CNode *temp = p->_pRight;
-                while (temp->_pLeft != NULL) {
-                    temp = temp->_pLeft;
+                // return leftMost(p->right)
+                p = p->_pRight;
+                while (p->_pLeft != NULL) {
+                    p = p->_pLeft;
                 }
-                return temp;
+                return p;
             }
+            // cách sau đây không phụ thuộc vào BST, chỉ cần là binary tree là sẽ ok :>
+            else if (p->_pParent->_pLeft == p) {    // TH2
+                return p->_pParent;
+            }
+            else if (p->_pParent->_pRight == p) {   // TH3
+                while (p->_pParent->_pRight == p) {
+                    p = p->_pParent;
+                }
+                return p->_pParent;
+            }
+
             /*  * cách này phụ thuộc vào việc cây đang xét bắt buộc phải là BST
                 else if (p->_pParent->_data > p->_data) {   // TH2
                     return p->_pParent;
@@ -95,18 +134,6 @@ class CTree {
                     return temp->_pParent;
                 }
             */
-
-            // cách sau đây không phụ thuộc vào BST, chỉ cần là binary tree là sẽ ok :>
-            else if (p->_pParent->_pLeft == p) {    // TH2
-                return p->_pParent;
-            }
-            else if (p->_pParent->_pRight == p) {   // TH3
-                CNode *temp = p;
-                while (temp->_pParent->_pRight == temp) {
-                    temp = temp->_pParent;
-                }
-                return temp->_pParent;
-            }
         }
 
         void BFS() {
@@ -176,8 +203,14 @@ int main(int argc, char const *argv[]) {
     tree->insert(4);
     tree->insert(3);
     tree->insert(6);
+    tree->insert(60);
 
-    cout << tree->findNextLNR(6)->getData() << endl;
+    // cout << tree->findNextLNR(6)->getData() << endl;
+    // cout << tree->findNextLNR(2)->getData() << endl;
+
+    cout << tree->findNextNLR(3)->getData() << endl;
+
+    // tree->BFS();
 
     return 0;
 }
