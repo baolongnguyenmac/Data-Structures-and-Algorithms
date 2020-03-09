@@ -46,30 +46,31 @@ class CTree {
         }
 
         // tìm node tiếp theo của node *p trong TH duyệt node theo kiểu NLR
-        // CNode* findNodeNLR(int x) {
-            /*
-                (TH1) -> 2 
-                        / \
-                (TH2)->1   3 <-(TH3)
+        CNode* findNodeNLR(int x) {
+            /*  * trình tự duyệt: 2->1->3
+                * (TH1) -> 2 
+                *         / \
+                * (TH2)->1   3 <-(TH3)
             */
-            // CNode *p = findNode(_pRoot, x);
-            // if (p == NULL) {
-            //     return NULL;
-            // }
-            // if (p->_pLeft != NULL) {
-            //     return p->_pLeft;
-            // }
-            // else if () {
-
-            // }
-        // }
+            CNode *p = findNode(_pRoot, x);
+            if (p == NULL) {
+                return NULL;
+            }
+            if (p->_pLeft != NULL) {
+                return p->_pLeft;
+            }
+            while (p->_pRight == NULL) {
+                p = p->_pParent;
+            }
+            return p->_pRight;
+        }
 
         // tìm node tiếp theo của node *p trong TH duyệt node theo kiểu LNR
         CNode* findNextLNR(int x) {
-            /*
-                (TH1) -> 2 
-                        / \
-                (TH2)->1   3 <-(TH3)
+            /*  * trình tự duyệt: 1->2->3
+                * (TH1) -> 2 
+                *         / \
+                * (TH2)->1   3 <-(TH3)
             */
             CNode *p = findNode(_pRoot, x);
             if (p == NULL) {
