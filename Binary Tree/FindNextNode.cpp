@@ -103,7 +103,8 @@ class CTree {
             if (p == NULL) {
                 return NULL;
             }
-            else if (p->_pRight != NULL) {  // TH1
+
+            if (p->_pRight != NULL) {  // TH1
                 // return leftMost(p->right)
                 p = p->_pRight;
                 while (p->_pLeft != NULL) {
@@ -112,10 +113,10 @@ class CTree {
                 return p;
             }
             // cách sau đây không phụ thuộc vào BST, chỉ cần là binary tree là sẽ ok :>
-            else if (p->_pParent->_pLeft == p) {    // TH2
+            if (p->_pParent->_pLeft == p) {    // TH2
                 return p->_pParent;
             }
-            else if (p->_pParent->_pRight == p) {   // TH3
+            if (p->_pParent->_pRight == p) {   // TH3
                 while (p->_pParent->_pRight == p) {
                     p = p->_pParent;
                 }
@@ -135,6 +136,24 @@ class CTree {
                 }
             */
         }
+
+        // CNode* findNextLRN(int x) {
+        //     CNode *p = findNode(_pRoot, x);
+        //     if (p == NULL) {
+        //         return NULL;
+        //     }
+
+        //     if (p->_pParent->_pRight == p) {
+        //         return p->_pParent;
+        //     }
+        //     if (p->_pParent->_pLeft == p) {
+        //         p = p->_pParent;
+        //         while (p->_pRight == NULL) {
+        //             p = p->_pParent;
+        //         }
+        //         // return p->
+        //     }
+        // }
 
         void BFS() {
             return BFS(_pRoot);
