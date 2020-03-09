@@ -87,14 +87,26 @@ class CTree {
                 else if (p->_pParent->_data > p->_data) {   // TH2
                     return p->_pParent;
                 }
-                else if (p->_pParent->_data < p->_data) {
+                else if (p->_pParent->_data < p->_data) {   // TH3
                     CNode *temp = p;
-                    while (temp->_pParent->_data < temp->_data) {   // TH3
+                    while (temp->_pParent->_data < temp->_data) {   
                         temp = temp->_pParent;
                     }
                     return temp->_pParent;
                 }
             */
+
+            // cách sau đây không phụ thuộc vào BST, chỉ cần là binary tree là sẽ ok :>
+            else if (p->_pParent->_pLeft == p) {    // TH2
+                return p->_pParent;
+            }
+            else if (p->_pParent->_pRight == p) {   // TH3
+                CNode *temp = p;
+                while (temp->_pParent->_pRight == temp) {
+                    temp = temp->_pParent;
+                }
+                return temp->_pParent;
+            }
         }
 
         void BFS() {
