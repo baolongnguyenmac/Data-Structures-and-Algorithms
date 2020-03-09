@@ -83,16 +83,18 @@ class CTree {
                 }
                 return temp;
             }
-            else if (p->_pParent->_data > p->_data) {   // TH2
-                return p->_pParent;
-            }
-            else if (p->_pParent->_data < p->_data) {
-                CNode *temp = p;
-                while (temp->_pParent->_data < temp->_data) {   // TH3
-                    temp = temp->_pParent;
+            /*  * cách này phụ thuộc vào việc cây đang xét bắt buộc phải là BST
+                else if (p->_pParent->_data > p->_data) {   // TH2
+                    return p->_pParent;
                 }
-                return temp->_pParent;
-            }
+                else if (p->_pParent->_data < p->_data) {
+                    CNode *temp = p;
+                    while (temp->_pParent->_data < temp->_data) {   // TH3
+                        temp = temp->_pParent;
+                    }
+                    return temp->_pParent;
+                }
+            */
         }
 
         void BFS() {
