@@ -165,7 +165,27 @@ class CTree {
             return isValidBST(_pRoot, NULL);
         }
 
+        // check if tree is a subtree of _pRoot
+        bool isSubTree(CTree tree) {
+            return isSubTree(search(tree._pRoot->_data), tree._pRoot);
+        }
+
     private:
+        bool isSubTree(CNode *root1, CNode *root2) {
+            if (root1 != NULL && root2 != NULL) {
+                if (isSubTree(root1->_pLeft, root2->_pLeft)) {
+                    if (root1->_data == root2->_data) {
+                        return isSubTree(root1->_pRight, root2->_pRight);
+                    }
+                }
+                return false;
+            }
+            else if (root1 == NULL && root2 == NULL) {
+                return true;
+            }
+            return false;
+        }
+
         // valid BST
         // CÀI ĐẶT BẰNG ĐỆ QUY Min/Max (sách ngta gọi nv :>)
         bool isValidBST(CNode *pRoot) {
@@ -419,7 +439,6 @@ class CTree {
 
 int main(int argc, char const *argv[]) {
     CTree *tree = new CTree;
-
     tree->insert(5);
     tree->insert(3);
     tree->insert(7);
@@ -428,7 +447,12 @@ int main(int argc, char const *argv[]) {
     tree->insert(6);
     tree->insert(4);
 
-    tree->LRN();
+    CTree *anotherTree = new CTree;
+    anotherTree->insert(7);
+    anotherTree->insert(6);
+    anotherTree->insert(8);
+
+    cout << tree->isSubTree(*anotherTree);
 
     // if (tree->isValidBST()) {
     //     cout << "dung cmnr\n";
