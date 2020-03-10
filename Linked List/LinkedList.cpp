@@ -118,6 +118,22 @@ class CList {
             return NULL;
         }
 
+        CList<int> partition(int x) {
+            CList<int> before, after;
+
+            for (CNode<int> *p = _pHead; p != NULL; p = p->_pNext) {
+                if (p->_data >= x) {
+                    after.addTail(p->_data);
+                }
+                else {
+                    before.addTail(p->_data);
+                }
+            }
+
+            before._pTail->_pNext = after._pHead;
+            return before;
+        }
+
     private:
         CNode<T> *_pHead = NULL;
         CNode<T> *_pTail = NULL;
@@ -127,17 +143,24 @@ class CList {
 int main(int argc, char const *argv[]) {
     CList<int> p;
     p.addTail(1);
+    p.addTail(9);
     p.addTail(2);
+    p.addTail(8);
     p.addTail(3);
+    p.addTail(7);
     p.addTail(4);
-    p.addTail(4);
+    p.addTail(6);
+    p.addTail(5);
+    p.addTail(0);
+
+    p = p.partition(5);
 
     // p.deleteNode(1);
     // p.deleteNode(3);
 
     // p.deleteDuplicatedNode();
 
-    cout << p.findNodeKth(3)->getData() << endl;
+    // cout << p.findNodeKth(3)->getData() << endl;
 
     p.printList();
 
