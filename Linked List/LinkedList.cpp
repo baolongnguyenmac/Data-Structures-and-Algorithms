@@ -118,6 +118,7 @@ class CList {
             return NULL;
         }
 
+        // chia list ra làm 2 phần, 1 lớn hơn hoặc bằng x và 1 nhỏ hơn x :>
         CList<int> partition(int x) {
             CList<int> before, after;
 
