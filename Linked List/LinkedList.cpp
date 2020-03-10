@@ -4,6 +4,8 @@
 #include "iostream"
 using namespace std;
 
+#include "cmath"
+
 template <class T>
 class CNode {
     public:
@@ -135,26 +137,57 @@ class CList {
             return before;
         }
 
+        /*  * mỗi list biểu diễn ngược 1 số tự nhiên, viết hàm tính tổng 2 list
+            * cơ mà với kiểu viết code này thì công trừ nhân chia 2 list cũng được nữa :) 
+            * input: (7->1->6) + (5->9->2) = 617 + 295 = 912
+            * output: (2->1->9)
+        */
+        static CList<int> sumList(CList<int> l1, CList<int> l2) {
+            int n1 = convertListToNumber(l1);
+            int n2 = convertListToNumber(l2);
+
+            return convertNumberToList(n1 + n2);
+        }
+
     private:
         CNode<T> *_pHead = NULL;
         CNode<T> *_pTail = NULL;
+
+        static int convertListToNumber(CList<int> l) {
+            int n = 0;
+            int count = 0;
+            for (CNode<int> *p = l._pHead; p != NULL; p = p->_pNext) {
+                n = n + p->_data * pow(10, count);
+                count++;
+            }
+            return n;
+        }
+
+        static CList<int> convertNumberToList(int n) {
+            CList<int> list;
+            while (n != 0) {
+                list.addTail(n % 10);
+                n/=10;
+            }
+            return list;
+        }
 };
 
 // template <typename T>
 int main(int argc, char const *argv[]) {
-    CList<int> p;
-    p.addTail(1);
-    p.addTail(9);
-    p.addTail(2);
-    p.addTail(8);
-    p.addTail(3);
-    p.addTail(7);
-    p.addTail(4);
-    p.addTail(6);
-    p.addTail(5);
-    p.addTail(0);
+    // CList<int> p;
+    // p.addTail(1);
+    // p.addTail(9);
+    // p.addTail(2);
+    // p.addTail(8);
+    // p.addTail(3);
+    // p.addTail(7);
+    // p.addTail(4);
+    // p.addTail(6);
+    // p.addTail(5);
+    // p.addTail(0);
 
-    p = p.partition(5);
+    // p = p.partition(5);
 
     // p.deleteNode(1);
     // p.deleteNode(3);
@@ -163,7 +196,23 @@ int main(int argc, char const *argv[]) {
 
     // cout << p.findNodeKth(3)->getData() << endl;
 
-    p.printList();
+    // p.printList();
+
+    CList<int> p;
+    p.addTail(7);
+    p.addTail(1);
+    p.addTail(6);
+
+    CList<int> q;
+    q.addTail(5);
+    q.addTail(9);
+    q.addTail(2);
+
+    CList<int> kq = CList<int>::sumList(p, q);
+    kq.printList();
+
+    // cout << CList<int>::convertListToNumber(p) << endl;
+    // cout << CList<int>::convertListToNumber(q) << endl;
 
     return 0;
 }
