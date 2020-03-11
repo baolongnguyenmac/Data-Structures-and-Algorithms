@@ -149,9 +149,61 @@ class CList {
             return convertNumberToList(n1 + n2);
         }
 
+        // // cũng là cộng list but 1 phiên bản chạy ngon hơn (chỉ mất O(m) với size(list1) = n < size(list2) = m)
+        // CList<int> sumList(CList<int> l) {
+        //     CList<int> result;
+        //     int n1 = length(*this);
+        //     int n2 = length(l);
+        //     int n = n1>n2?n1:n2;
+
+        //     for (int i = 0; i < n; i++) {
+
+        //     }
+        // }
+
+        static bool isPalindrome(CList<int> list) {
+            CList<int> reverse = reverseList(list);
+            CNode<int> *q = reverse._pHead;
+
+            for (CNode<int> *p = list._pHead; p != NULL; p = p->_pNext) {
+                if (p->_data != q->_data) {
+                    return false;
+                }
+                q = q->_pNext;
+            }
+            return true;
+        }
+
     private:
         CNode<T> *_pHead = NULL;
         CNode<T> *_pTail = NULL;
+
+        static CList<T> reverseList(CList<T> list) {
+            CList<T> reverse;
+            for (CNode<T> *p = list._pHead; p != NULL; p = p->_pNext) {
+                reverse.addHead(p->_data);
+            }
+            return reverse;
+        }
+
+        void addHead(T data) {
+            if (_pHead == NULL) {
+                _pHead = _pTail = new CNode<T> (data);
+            }
+            else {
+                CNode<T> *p = new CNode<T> (data);
+                p->_pNext = _pHead;
+                _pHead = p;
+            }
+        }
+
+        int length(CList<T> list) {
+            int count = 0;
+            for (CNode<T> *p = list._pHead; p != NULL; p = p->_pNext) {
+                count++;
+            }
+            return count;
+        }
 
         static int convertListToNumber(CList<int> l) {
             int n = 0;
@@ -198,21 +250,28 @@ int main(int argc, char const *argv[]) {
 
     // p.printList();
 
-    CList<int> p;
-    p.addTail(7);
-    p.addTail(1);
-    p.addTail(6);
+    // CList<int> p;
+    // p.addTail(7);
+    // p.addTail(1);
+    // p.addTail(6);
 
-    CList<int> q;
-    q.addTail(5);
-    q.addTail(9);
-    q.addTail(2);
+    // CList<int> q;
+    // q.addTail(5);
+    // q.addTail(9);
+    // q.addTail(2);
 
-    CList<int> kq = CList<int>::sumList(p, q);
-    kq.printList();
+    // CList<int> kq = CList<int>::sumList(p, q);
+    // kq.printList();
 
     // cout << CList<int>::convertListToNumber(p) << endl;
     // cout << CList<int>::convertListToNumber(q) << endl;
+
+    CList<int> q;
+    q.addTail(1);
+    q.addTail(1);
+    // q.addTail(0);
+
+    cout << CList<int>::isPalindrome(q) << endl;
 
     return 0;
 }
