@@ -24,8 +24,9 @@ class CNode {
 template <class T>
 class CStack {
     public:
+        // add item to head
         void push(T data) {
-            if (_pHead == NULL) {
+            if (isEmpty()) {
                 _pHead = _pTail = new CNode<T>(data);
             }
             else {
@@ -35,6 +36,7 @@ class CStack {
             }
         }
 
+        // remove the top item
         void pop() {
             try {
                 if (_pHead != NULL) {
@@ -51,6 +53,7 @@ class CStack {
             }
         }
 
+        // return value of the top item
         CNode<T>* peek() {
             try {
                 if (_pHead == NULL) {
@@ -74,12 +77,32 @@ class CStack {
             cout << endl;
         }
 
-    private:
+        CStack(T data) {
+            _pHead = _pTail = new CNode<T>(data);
+        }
+        CStack(){}
+
+        ~CStack() {
+            if (_pHead != NULL) {
+                CNode<T> *temp;
+                while (_pHead != NULL) {
+                    temp = _pHead;
+                    _pHead = _pHead->_pNext;
+                    delete temp;
+                }
+                _pHead = _pHead = NULL;
+            }
+        }
+
+    public:
         CNode<T> *_pHead = NULL;
         CNode<T> *_pTail = NULL;
 };
 
 int main(int argc, char const *argv[]) {
+
+#pragma region demo stack
+#if 0
     CStack<int> s;
     s.push(1);
     s.push(2);
@@ -89,10 +112,16 @@ int main(int argc, char const *argv[]) {
     s.printStack();
     s.pop();
     s.pop();
-    s.pop();
-    s.pop();
 
-    cout << s.peek()->getData();
+    cout << s.peek()->getData() << endl;
+
+    for (int i = 0; i < 10000; i++);
+    cout << s._pHead->getData() << endl;
+    s.printStack();
+#endif
+#pragma endregion
+
+
 
     return 0;
 }
