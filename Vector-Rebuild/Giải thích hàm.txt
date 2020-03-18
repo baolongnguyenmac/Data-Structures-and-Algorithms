@@ -1,0 +1,67 @@
+|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+|*** BÁO CÁO TÌM HIỂU THƯ VIỆN VECTOR – NGÔN NGỮ C++ ***|       // kiêm luôn giải thích hoạt động của các hàm 
+|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+
+1.	Khai báo thư viện
+#include <vector>
+2.	Danh sách các hàm trong thư viện
+
+/////////////////////////////////////
+/2.1.	Hàm liên quan đến Iterator /
+/////////////////////////////////////
+Hoàn thành |Tên hàm	    |Chức năng
+           |begin()	    |Trả về một iterator trỏ đến phần tử đầu tiên của vector    -> là trả về con trỏ đó 
+           |end()	    |Trả về một iterator trỏ đến phần tử cuối cùng của vector   -> là trả về con trỏ đó 
+           |rbegin()	|Trả về một iterator trỏ đến phần tử đầu tiên của vector đã bị đảo ngược (ứng với phần tử cuối cùng của dãy ban đầu)
+           |rend()	    |Trả về một iterator trỏ đến phần tử cuối cùng của vector đã bị đảo ngược (ứng với phần tử đầu tiên của dãy ban đầu)
+           |cbegin()	|Trả về một hằng iterator trỏ đến phần tử đầu tiên của vector
+           |cend()	    |Trả về một hằng iterator trỏ đến phần tử cuối cùng của vector
+           |crbegin()	|Trả về một hằng iterator trỏ đến phần tử đầu tiên của vector đã bị đảo ngược (ứng với phần tử cuối cùng của dãy ban đầu)
+           |crend()	    |Trả về một hằng iterator trỏ đến phần tử cuối cùng của vector đã bị đảo ngược (ứng với phần tử đầu tiên của dãy ban đầu)
+
+
+
+///////////////////////////////////////////////////
+/ 2.2.	Hàm liên quan đến kích thước của vector /
+///////////////////////////////////////////////////
+Hoàn thành |Tên hàm	        |Chức năng
+           |size()	        |Trả về số lượng phần tử có trong vector    -> trả về int
+           |max_size()	    |Trả về số lượng phần tử tối đa mà vector có thể lưu trữ
+           |capactity()	    |Trả về số lượng phần tử được cấp phát cho vector   -> bộ nhớ được cấp phát sẽ gấp đôi size()
+           |resize(int n)	|Đặt lại kích thước vector chứa n phần tử
+           |empty()	        |Trả về false nếu vector trống, ngược lại, trả về true
+           |shrink_to_fit()	|Giải phóng các vùng nhớ dư thừa của vector -> chính là giải phóng đống capacity() chưa dùng tới ở bên trên
+           |reserve(int n)	|Yêu cầu cấp phát tổi thiểu để có thể chứa được n phần tử   -> cấp phát cho size() ô nhớ 
+
+
+/////////////////////////////////////////////
+/2.3.	Truy cập phần tử bên trong vector /
+/////////////////////////////////////////////
+Hoàn thành |Tên hàm	            |Chức năng
+           |Operator [int n]	|Truy cập đến phần tử thứ n của vector và trả về tham chiếu đến phần tử đó
+           |at(int n)	        |
+           |front()	            |Trả về  tham chiếu tới phần tử đầu tiên của vector
+           |last()	            |Trả về  tham chiếu tới phần tử cuối cùng của vector
+           |data()	            |Trả về con trỏ, trỏ đến vùng nhớ lưu trữ các phần tử của vector
+
+//////////////////////////////////////////////
+/2.4.	Sửa đổi phần tử bên trong vector /
+//////////////////////////////////////////////
+Hoàn thành |Tên hàm 	    |Chức năng
+           |assign()	    |Gán giá trị mới cho các phần tử trong vector bằng cách thay thế các phần tử cũ
+           |push_back()	    |Thêm phần tử vào vector
+           |pop_back()	    |Lấy ra phần tử cuối cùng của vector
+           |insert()	    |Chèn phần tử mới vào trước phần tử được được chỉ định
+           |clear() 	    |Loại bỏ tất cả các phần tử ra khỏi vector
+           |emplace()	    |Mở rộng bộ nhớ của vector bằng cách chèn thêm phần tử vào vị trí được truyền tới
+           |emplace_back()	|Mở rộng bộ nhớ của vector bằng cách chèn thêm phần tử vào cuối vector
+           |erase()	        |Loại bỏ phần tử hoặc nhóm phần tử được chỉ định ra khỏi vector
+           |swap()	        |Hoán vị các phần tử của vector gọi hàm với vector truyền vào (có cùng kiểu dữ liệu). Số lượng phần tử của 2 vector là bằng nhau
+
+3.	Tài liệu tham khảo
+https://www.geeksforgeeks.org/vector-in-cpp-stl/
+https://www.geeksforgeeks.org/vector-erase-and-clear-in-cpp/
+https://www.geeksforgeeks.org/vector-emplace-function-in-c-stl/
+https://www.geeksforgeeks.org/vectoremplace_back-c-stl/
+
+
