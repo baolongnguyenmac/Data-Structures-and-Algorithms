@@ -39,17 +39,15 @@ class CStack {
         // remove the top item
         void pop() {
             try {
-                if (_pHead != NULL) {
-                    CNode<T> *del = _pHead;
-                    _pHead = _pHead->_pNext;
-                    delete del;
-                }
-                else {
+                if (isEmpty()) {
                     throw 1;
                 }
+                CNode<T> *del = _pHead;
+                _pHead = _pHead->_pNext;
+                delete del;
             }
             catch (int n) {
-                cout << "Stack rong. Loi nullptr\n";
+                cout << "Loi stack rong.\n";
             }
         }
 
@@ -62,7 +60,7 @@ class CStack {
                 return _pHead;
             }
             catch(int n) {
-                cout << "Stack rong. Loi nullptr\n";
+                cout << "Loi stack rong.\n";
             }
         }
 
@@ -94,32 +92,29 @@ class CStack {
             }
         }
 
-    public:
+    private:
         CNode<T> *_pHead = NULL;
         CNode<T> *_pTail = NULL;
 };
 
 int main(int argc, char const *argv[]) {
 
-#pragma region demo stack
-#if 0
-    CStack<int> s;
-    s.push(1);
-    s.push(2);
-    s.push(3);
-    s.push(4);
+    #pragma region demo stack
+    #if 1
+        CStack<int> s;
+        s.push(1);
+        s.push(2);
+        // s.push(3);
+        // s.push(4);
 
-    s.printStack();
-    s.pop();
-    s.pop();
+        s.printStack();
+        s.pop();
+        s.pop();
 
-    cout << s.peek()->getData() << endl;
-
-    for (int i = 0; i < 10000; i++);
-    cout << s._pHead->getData() << endl;
-    s.printStack();
-#endif
-#pragma endregion
+        cout << s.peek()->getData() << endl;
+        s.printStack();
+    #endif
+    #pragma endregion
 
 
 
