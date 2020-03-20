@@ -162,7 +162,7 @@ class CTree {
             // return isValidBST(_pRoot);
 
             // method 2
-            return isValidBST(_pRoot, NULL);
+            return isValidBST(_pRoot, new int(INT_MAX));
         }
 
         // check if tree is a subtree of _pRoot
@@ -187,7 +187,7 @@ class CTree {
         }
 
         // valid BST
-        // CÀI ĐẶT BẰNG ĐỆ QUY Min/Max (sách ngta gọi nv :>)
+        // CÀI ĐẶT BẰNG ĐỆ QUY Min/Max (sách ngta gọi nv :>) -> SAI SAI SAI SAI SAI SAI SAI SAI SAI SAI SAI SAI 
         bool isValidBST(CNode *pRoot) {
             if (pRoot == NULL) {
                 return true;
@@ -223,7 +223,7 @@ class CTree {
             if (!isValidBST(pRoot->_pLeft, lastData)) {
                 return false;
             }
-            if (lastData != NULL && *lastData > pRoot->_data) {
+            if (*lastData != INT_MAX && *lastData > pRoot->_data) {
                 return false;
             }
             *lastData = pRoot->_data;
@@ -438,6 +438,7 @@ class CTree {
 };
 
 int main(int argc, char const *argv[]) {
+    #if 0   // đề mô isSubTree
     CTree *tree = new CTree;
     tree->insert(5);
     tree->insert(3);
@@ -453,6 +454,18 @@ int main(int argc, char const *argv[]) {
     anotherTree->insert(8);
 
     cout << tree->isSubTree(*anotherTree);
+    #endif
+
+    #if 1   // demo link tinh
+    CTree *tree = new CTree;
+    tree->insert(10);
+    tree->insert(5);
+    tree->insert(15);
+    tree->insert(6);
+    tree->insert(20);
+
+    cout << tree->isValidBST() << endl;
+    #endif
 
     // if (tree->isValidBST()) {
     //     cout << "dung cmnr\n";
