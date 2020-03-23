@@ -29,3 +29,6 @@ add node at tail
 implement stack and queue
 implement 3 stack using an array (but the capacity of each stack is stable)
 implement an algorithm that returns the min value of a stack. pop(), push(), min() take O(1) time
+
+## Vector-Rebuild
+just recreate vector library 
