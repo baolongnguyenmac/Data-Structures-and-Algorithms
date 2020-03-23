@@ -37,18 +37,20 @@ class CStack {
         }
 
         // remove the top item
-        void pop() {
-            try {
+        T pop() {
+            // try {
                 if (isEmpty()) {
                     throw 1;
                 }
+                T meoMeo = _pHead->_data;
                 CNode<T> *del = _pHead;
                 _pHead = _pHead->_pNext;
                 delete del;
-            }
-            catch (int n) {
-                cout << "Loi stack rong.\n";
-            }
+                return meoMeo;
+            // }
+            // catch (int n) {
+            //     cout << "Loi stack rong.\n";
+            // }
         }
 
         // return value of the top item
