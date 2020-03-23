@@ -53,15 +53,10 @@ class CStack {
 
         // return value of the top item
         CNode<T>* peek() {
-            try {
-                if (_pHead == NULL) {
-                    throw 1;
-                }
-                return _pHead;
+            if (_pHead == NULL) {
+                throw 1;
             }
-            catch(int n) {
-                cout << "Loi stack rong.\n";
-            }
+            return _pHead;
         }
 
         bool isEmpty() {
@@ -111,7 +106,12 @@ int main(int argc, char const *argv[]) {
         s.pop();
         s.pop();
 
-        cout << s.peek()->getData() << endl;
+        try {
+            cout << s.peek()->getData() << endl;
+        }
+        catch(int n) {
+            cout << "Loi stack rong\n";
+        }
         s.printStack();
     #endif
     #pragma endregion
