@@ -158,7 +158,7 @@ class CTree {
         }
 
         bool isValidBST() {
-            // // method1
+            // // method1 -> sai
             // return isValidBST(_pRoot);
 
             // method 2
@@ -186,8 +186,12 @@ class CTree {
             return false;
         }
 
-        // valid BST
-        // CÀI ĐẶT BẰNG ĐỆ QUY Min/Max (sách ngta gọi nv :>) -> SAI SAI SAI SAI SAI SAI SAI SAI SAI SAI SAI SAI 
+        /*
+            * valid BST
+            * CÀI ĐẶT BẰNG ĐỆ QUY Min/Max (sách ngta gọi nv thì phải  :>) 
+            * SAI: vì chỉ kiểm tra giữa 3node đang xét (left, node, right) 
+            * mà quên rằng cây phải thoả với mọi trái < node < phải 
+        */
         bool isValidBST(CNode *pRoot) {
             if (pRoot == NULL) {
                 return true;
@@ -438,7 +442,7 @@ class CTree {
 };
 
 int main(int argc, char const *argv[]) {
-    #if 0   // đề mô isSubTree
+#if 0   // đề mô isSubTree
     CTree *tree = new CTree;
     tree->insert(5);
     tree->insert(3);
@@ -454,9 +458,9 @@ int main(int argc, char const *argv[]) {
     anotherTree->insert(8);
 
     cout << tree->isSubTree(*anotherTree);
-    #endif
+#endif
 
-    #if 1   // demo link tinh
+#if 1   // demo link tinh
     CTree *tree = new CTree;
     tree->insert(10);
     tree->insert(5);
@@ -465,7 +469,7 @@ int main(int argc, char const *argv[]) {
     tree->insert(20);
 
     cout << tree->isValidBST() << endl;
-    #endif
+#endif
 
     // if (tree->isValidBST()) {
     //     cout << "dung cmnr\n";

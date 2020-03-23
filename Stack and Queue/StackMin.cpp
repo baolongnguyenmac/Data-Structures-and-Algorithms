@@ -1,5 +1,5 @@
 /*
-    * implement a func that returns the min value of a stack whatever stack does
+    * implement a func that returns the min value of a stack despite of whatever stack does
     * pop, push, min should take O(1) time
 */
 
