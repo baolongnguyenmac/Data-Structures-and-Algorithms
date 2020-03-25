@@ -212,12 +212,12 @@ class CSetOfStacks {
     private:
         void printStack(CSetOfStacks s) {
             CStack *last = s.getLastStack();
-            if (last == NULL) {
+            if (last == NULL) {     // nếu stack rỗng (i mean _setOfStacks)
                 throw 1;
             }
-            if (last->isEmpty()) {
-                s._setOfStacks.pop_back();
-                if (s._setOfStacks.empty()) {
+            if (last->isEmpty()) {  // nếu last rỗng (nhưng _setOfStacks có thể không rỗng)
+                s._setOfStacks.pop_back();  // loại bỏ phần tử rỗng ra khỏi vector
+                if (s._setOfStacks.empty()) {   // sau khi loại bỏ thì khả năng vector bị rỗng
                     throw 1;
                 }
             }
@@ -230,13 +230,15 @@ class CSetOfStacks {
             if (_setOfStacks.empty()) {
                 return NULL;
             }
+            // return last bất kể last có empty hay không
+            // nếu empty thì sẽ được xoá đi ở hàm mẹ 
             return _setOfStacks.back();
         }
 
         void push(int data, CSetOfStacks &s) {
             CStack *last = s.getLastStack();
-            if (last == NULL || last->isFull()) {
-                CStack *temp = new CStack(_capacity);
+            if (last == NULL || last->isFull()) {       // trong TH vector rỗng hoặ c last đầy 
+                CStack *temp = new CStack(_capacity);   // thì vector đều cần new ra 1 stack mới 
                 temp->push(data, *temp);
                 s._setOfStacks.push_back(temp);
             }
@@ -247,7 +249,7 @@ class CSetOfStacks {
 
         int pop(CSetOfStacks &s) {
             CStack *last = s.getLastStack();
-            if (last == NULL) {
+            if (last == NULL) {     // vector rỗng 
                 throw 1;
             }
             if (last->isEmpty()) {
@@ -262,7 +264,7 @@ class CSetOfStacks {
 
         int peek(CSetOfStacks s) {
             CStack *last = s.getLastStack();
-            if (last == NULL) {
+            if (last == NULL) {     // vector rỗng 
                 throw 1;
             }
             if (last->isEmpty()) {
